@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  diabetic-predict-model:
+    build: .
+    image: piyushdocker90/diabetic-predict-model:latest
+    ports:
+      - "3000:3000"
+    env_file: .env
+    restart: unless-stopped

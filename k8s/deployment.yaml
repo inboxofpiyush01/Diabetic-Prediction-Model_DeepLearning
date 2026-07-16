@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: diabetic-predict-model
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: diabetic-predict-model }
+  template:
+    metadata: { labels: { app: diabetic-predict-model } }
+    spec:
+      containers:
+      - name: diabetic-predict-model
+        image: piyushdocker90/diabetic-predict-model:latest
+        ports: [{containerPort: 3000}]

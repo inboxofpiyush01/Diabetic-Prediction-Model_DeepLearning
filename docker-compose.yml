@@ -1,8 +1,8 @@
 version: '3.8'
 services:
-  diabetic-predict-model:
+  floor-cleaner-sales:
     build: .
-    image: piyushdocker90/diabetic-predict-model:latest
+    image: piyushdocker90/floor-cleaner-sales:latest
     ports:
       - "3000:3000"
     env_file: .env

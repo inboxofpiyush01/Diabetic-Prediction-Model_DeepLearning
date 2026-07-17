@@ -1,9 +1,9 @@
-version: '3.8'
 services:
   floor-cleaner-sales:
     build: .
-    image: piyushdocker90/floor-cleaner-sales:latest
+    image: ${DOCKERHUB_USERNAME}/floor-cleaner-sales:latest
     ports:
-      - "3000:3000"
-    env_file: .env
+      - "8000:8000"
+    env_file:
+      - .env
     restart: unless-stopped

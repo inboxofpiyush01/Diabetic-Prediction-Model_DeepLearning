@@ -1,4 +1,4 @@
 services:
-  diabetic-prediction-modeldeeplearning:
+  diabetic-prediction-modeldeeplearning-main:
     build: .
     restart: unless-stopped

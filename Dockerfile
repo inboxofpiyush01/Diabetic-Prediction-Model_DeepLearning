@@ -1,9 +1,9 @@
 FROM python:3.11-slim
-ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
 WORKDIR /app
-COPY project files .
-RUN pip install --no-cache-dir -r project files
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 RUN useradd -m appuser && chown -R appuser /app
 USER appuser
-CMD ["python", "main.py"]
+CMD ["python", "diabetes_pred_model_deeplearning.py"]

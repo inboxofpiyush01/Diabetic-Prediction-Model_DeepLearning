@@ -1,32 +1,47 @@
-name: Build and Push to Docker Hub
+name: Validate, Build and Optionally Push
 
 on:
   push:
-    branches: [ "main", "diabetic-prediction-modeldeeplearning/**", "anycloud/**" ]
+    branches: [ "main", "diabetic-prediction-modeldeeplearning-main/**", "anycloud/**" ]
+  pull_request:
   workflow_dispatch:
 
+env:
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
 jobs:
-  build:
+  docker:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-
+      - name: Validate image build (linux/amd64)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          platforms: linux/amd64
+          tags: anycloud/diabetic-prediction-modeldeeplearning-main:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       - name: Login to Docker Hub
+        if: ${{ env.DOCKERHUB_USERNAME != '' && env.DOCKERHUB_TOKEN != '' }}
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push
-        uses: docker/build-push-action@v5
+          username: ${{ env.DOCKERHUB_USERNAME }}
+          password: ${{ env.DOCKERHUB_TOKEN }}
+      - name: Push image to Docker Hub
+        if: ${{ env.DOCKERHUB_USERNAME != '' && env.DOCKERHUB_TOKEN != '' && github.event_name != 'pull_request' }}
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          platforms: linux/amd64,linux/arm64
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/diabetic-prediction-modeldeeplearning:latest
+          platforms: linux/amd64
+          tags: ${{ env.DOCKERHUB_USERNAME }}/diabetic-prediction-modeldeeplearning-main:latest
           cache-from: type=gha
-          cache-to: type=gha,mode=max
+      - name: Docker Hub credentials not configured
+        if: ${{ env.DOCKERHUB_USERNAME == '' || env.DOCKERHUB_TOKEN == '' }}
+        run: echo "::notice::Image build passed. Push skipped because DOCKERHUB_USERNAME and DOCKERHUB_TOKEN are not configured."

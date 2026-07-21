@@ -1,4 +1,6 @@
 services:
-  diabetic-prediction-modeldeeplearning-main:
+  diabetic-prediction-model_deeplearning-main:
     build: .
     restart: unless-stopped
+    ports:
+      - "8501:8501"

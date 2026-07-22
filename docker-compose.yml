@@ -1,6 +1,12 @@
 services:
   diabetic-prediction-model_deeplearning-main:
-    build: .
+    build:
+      context: .
+      args:
+        APP_PORT: ${PORT:-8501}
+    container_name: diabetic-prediction-model_deeplearning-main-app
     restart: unless-stopped
+    environment:
+      PORT: ${PORT:-8501}
     ports:
-      - "8501:8501"
+      - "127.0.0.1:${HOST_PORT:-8501}:${PORT:-8501}"

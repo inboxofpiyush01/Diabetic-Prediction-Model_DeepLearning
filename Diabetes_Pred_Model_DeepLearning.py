@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import streamlit as st
 import joblib
 import numpy as np
@@ -39,7 +38,6 @@ if st.button("Predict"):
                 chol,bp,diabp,bmi,hr,glucose,TenYearCHD_Val ]])
     pred = model.predict(X)[0]
 
-=======
 import streamlit as st
 import joblib
 import numpy as np
@@ -80,5 +78,4 @@ if st.button("Predict"):
                 chol,bp,diabp,bmi,hr,glucose,TenYearCHD_Val ]])
     pred = model.predict(X)[0]
 
->>>>>>> 114e9a050065e6d5d65a5a36938b8ee508f4c85e
     st.success("✅ Diabetic" if pred == 1 else "❌ Not Diabetic")

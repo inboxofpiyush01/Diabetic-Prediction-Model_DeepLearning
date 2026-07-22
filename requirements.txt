@@ -1,16 +1,13 @@
-<<<<<<< HEAD
 scikit-learn
 numpy
 pandas
 streamlit
 joblib==1.4.2
 tensorflow
-=======
 scikit-learn
 numpy
 pandas
 streamlit
 joblib==1.4.2
 tensorflow
->>>>>>> 114e9a050065e6d5d65a5a36938b8ee508f4c85e
 keras

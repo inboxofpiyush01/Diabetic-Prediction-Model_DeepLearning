@@ -1,0 +1,14 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: diabetic-prediction-model-deeplearning-main
+spec:
+  template:
+    spec:
+      containers:
+        - image: YOUR_DOCKERHUB_USERNAME/diabetic-prediction-model-deeplearning-main:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PORT
+              value: "8080"

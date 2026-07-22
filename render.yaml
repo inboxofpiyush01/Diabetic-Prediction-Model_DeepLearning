@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: diabetic-prediction-model-deeplearning-main
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    healthCheckPath: /
+    envVars:
+      - key: PORT
+        value: "8080"
